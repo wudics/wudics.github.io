@@ -1,0 +1,168 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="CS1.6服务器技术分享，包括CS1.6服务器搭建、地图制作、AMXX插件开发等"><meta name="google-site-verification" content="nD2LaPpjKWHdIFXVgELbbVkoUkdiksGRk8KPaTsvz7U"><meta name="baidu-site-verification" content="codeva-Z5rMAmVrVN"><title>制作CS1.6地图001-前言 | 无敌CS博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/latest/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/grids-responsive-min.min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/latest/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = 'https://hm.baidu.com/hm.js?' + '1368248848730e2ee23faba2bc1db2d3';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();</script><script type="text/javascript" src="//lib.baomitu.com/clipboard.js/latest/clipboard.min.js"></script><script type="text/javascript" src="//lib.baomitu.com/toastr.js/latest/toastr.min.js"></script><link rel="stylesheet" href="//lib.baomitu.com/toastr.js/latest/toastr.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">制作CS1.6地图001-前言</h1><a id="logo" href="/.">无敌CS博客</a><p class="description">wudics blog here to tell you how to do with cs1.6</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">制作CS1.6地图001-前言</h1><div class="post-meta">2023-02-21<span> | </span><span class="category"><a href="/categories/cs1-6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C/">cs1.6地图制作</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a class="disqus-comment-count" href="/2023/02/21/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C001-%E5%89%8D%E8%A8%80/#vcomment"><span class="valine-comment-count" data-xid="/2023/02/21/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C001-%E5%89%8D%E8%A8%80/"></span><span> 条评论</span></a><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CS1-6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">CS1.6地图制作概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.1.</span> <span class="toc-text">参考资料</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CS1-6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">CS1.6地图制作工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CS1-6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B%E8%AF%B4%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">CS1.6地图制作系列教程说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CS1-6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84"><span class="toc-number">3.1.</span> <span class="toc-text">CS1.6地图制作学习路径</span></a></li></ol></li></ol></div></div><div class="post-content"><p>本系列将会从0到1介绍CS1.6地图制作，技术比较复古，请多多包涵。本系列教程旨在让CS1.6玩家和爱好者掌握CS1.6地图的制作，从而分享有趣的想法，让CS1.6保持活力。喜欢CS1.6的朋友可以加微信好友一起玩游戏，微信号是<code>qq176367820</code>，也可以用微信扫一扫下边的二维码添加微信好友。</p>
+<p><img src="/images/wechat.jpg"></p>
+<h2 id="CS1-6地图制作概述"><a href="#CS1-6地图制作概述" class="headerlink" title="CS1.6地图制作概述"></a>CS1.6地图制作概述</h2><p>CS1.6是一款3D的FPS游戏，制作的地图自然是3D的地图，例如de_dust2、de_nuke等等。我们利用CS1.6官方提供的地图制作工具、纹理制作工具、图标制作工具、3D模型制作工具等，以及安装CS1.6自带的纹理、模型、图标等资源素材，再通过搭积木、上颜色、摆家具的方式来完成我们的CS1.6的制作。</p>
+<p>本系列教程大量学习参考了X-man天书（古老的CS地图制作教材），从2003年开始学习了该教材，使我在初中的三年里制作了很多有趣的地图，与同学度过了愉快的初中时代，特此非常感谢！！！</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/womeiKTGC2g">X-man天书（CS地图制作文字版教材）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/kiYQsqnFuGS">地瓜大侠CS地图制作视频教程</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://gamebanana.com/games/4254">国外的CS1.6教程、地图源文件和素材资源 (gamebanana.com)</a></p>
+</li>
+</ul>
+<h2 id="CS1-6地图制作工具"><a href="#CS1-6地图制作工具" class="headerlink" title="CS1.6地图制作工具"></a>CS1.6地图制作工具</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/iSBtvdGCdkH">Valve Hammer Editor 3.5（CS地图制作工具，必需）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/qg4baFEX2pw">Wally（纹理制作工具，非必需）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/uU8EJoHWxxX">地图源文件高级编译器（地图源文件编译器，非必需）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/8cPS7U97QtM">发光纹理编辑器（非必需）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/M81XvgM84oA">模型查看工具（非必需）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/pknJe3pvUGm">图标查看工具（非必需）</a></p>
+</li>
+</ul>
+<h2 id="CS1-6地图制作系列教程说明"><a href="#CS1-6地图制作系列教程说明" class="headerlink" title="CS1.6地图制作系列教程说明"></a>CS1.6地图制作系列教程说明</h2><p>本系列教程将从软件下载安装、制作第一个CS地图开始，逐步深入了解不同类型的CS1.6地图制作，包括C4炸弹地图、人质地图、土匪逃跑地图、VIP护送地图等，理解不同实体的作用，纹理、图标、模型等资源的制作，以及CS1.6服务器的配置和地图资源文件的部署。</p>
+<h3 id="CS1-6地图制作学习路径"><a href="#CS1-6地图制作学习路径" class="headerlink" title="CS1.6地图制作学习路径"></a>CS1.6地图制作学习路径</h3><ul>
+<li><p>Valve Hammer Editor 3.5 （简称vhe） 下载安装和配置</p>
+<ul>
+<li><p>软件安装</p>
+</li>
+<li><p>软件配置</p>
+</li>
+<li><p>软件、编译、游戏的关系</p>
+</li>
+<li><p>地图的组成元素</p>
+</li>
+</ul>
+</li>
+<li><p>制作第一个CS地图</p>
+<ul>
+<li><p>vhe制作最简单的地图和测试（入门必看）</p>
+</li>
+<li><p>vhe视图窗口说明和设置</p>
+</li>
+<li><p>vhe工具按钮的作用说明</p>
+</li>
+<li><p>vhe纹理工具的使用说明</p>
+</li>
+<li><p>天空纹理和特殊纹理的说明</p>
+</li>
+<li><p>CS地图类型和常用实体说明</p>
+</li>
+<li><p>选择工具的使用说明</p>
+</li>
+<li><p>固体实体的制作方法</p>
+</li>
+</ul>
+</li>
+<li><p>CS地图高级编译工具的使用说明</p>
+<ul>
+<li><p>地图编译前的准备工作</p>
+</li>
+<li><p>使用vhe自带的高级编译工具编译地图</p>
+</li>
+<li><p>使用第三方CS地图高级编译工具编译地图</p>
+</li>
+<li><p>打包纹理编译（将wad纹理打包进bsp地图文件）</p>
+</li>
+<li><p>发光纹理编译（使纹理具有发光和照明效果）</p>
+</li>
+<li><p>编译参数说明</p>
+</li>
+</ul>
+</li>
+<li><p>地图发布</p>
+<ul>
+<li><p>资源文件res制作</p>
+</li>
+<li><p>地图概览overview制作</p>
+</li>
+<li><p>重定向下载服务器（CS服务器和资源下载服务器分离，http协议加速资源下载）</p>
+</li>
+</ul>
+</li>
+<li><p>纹理制作</p>
+<ul>
+<li><p>wally软件介绍</p>
+</li>
+<li><p>纹理基础知识</p>
+</li>
+<li><p>纹理制作</p>
+</li>
+</ul>
+</li>
+<li><p>图标制作</p>
+<ul>
+<li><p>spr软件介绍</p>
+</li>
+<li><p>图标基础知识</p>
+</li>
+<li><p>图标制作</p>
+</li>
+</ul>
+</li>
+<li><p>模型制作</p>
+<ul>
+<li><p>mdl模型查看工具</p>
+</li>
+<li><p>模型制作工具</p>
+</li>
+<li><p>模型资源下载和在地图中添加模型</p>
+</li>
+</ul>
+</li>
+<li><p>实体文档</p>
+<ul>
+<li><p>env系列实体</p>
+</li>
+<li><p>cycler系列实体</p>
+</li>
+<li><p>func系列实体</p>
+</li>
+<li><p>game系列实体</p>
+</li>
+<li><p>info系列实体</p>
+</li>
+<li><p>item系列实体</p>
+</li>
+<li><p>light系列实体</p>
+</li>
+<li><p>path系列实体</p>
+</li>
+<li><p>trigger系列实体</p>
+</li>
+<li><p>xen系列实体</p>
+</li>
+<li><p>其他实体</p>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="tags"><a href="/tags/cs1.6"><i class="fa fa-tag">cs1.6</i></a><a href="/tags/maps"><i class="fa fa-tag">maps</i></a></div><div class="post-nav"><a class="pre" href="/2023/02/21/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C002-vhe%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">制作CS1.6地图002-vhe安装和配置</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == 'true' ? true : false;
+var verify = 'false' == 'true' ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'LPmDnvJEI92SNW9V6j9OieMI-gzGzoHsz',
+  appKey:'segFEOA3MguYQKbzhkNRbaPd',
+  placeholder:'Just so so',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="https://www.wudics.com"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>wudics</p><a class="info-icon" href="mailto:176367820@qq.com" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/wudics" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C/">cs1.6地图制作</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E6%9C%8D%E5%8A%A1%E5%99%A8/">cs1.6服务器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/">cs1.6编程开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/cs1-6/" style="font-size: 15px;">cs1.6</a> <a href="/tags/maps/" style="font-size: 15px;">maps</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/vscode/" style="font-size: 15px;">vscode</a> <a href="/tags/edge/" style="font-size: 15px;">edge</a> <a href="/tags/nodejs/" style="font-size: 15px;">nodejs</a> <a href="/tags/forever/" style="font-size: 15px;">forever</a> <a href="/tags/win10/" style="font-size: 15px;">win10</a> <a href="/tags/display/" style="font-size: 15px;">display</a> <a href="/tags/frp/" style="font-size: 15px;">frp</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/veraycrypt/" style="font-size: 15px;">veraycrypt</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%8A%A0%E5%AF%86/" style="font-size: 15px;">文件加密</a> <a href="/tags/%E7%9B%98%E7%AC%A6%E9%9A%90%E8%97%8F/" style="font-size: 15px;">盘符隐藏</a> <a href="/tags/server/" style="font-size: 15px;">server</a> <a href="/tags/amxx/" style="font-size: 15px;">amxx</a> <a href="/tags/module/" style="font-size: 15px;">module</a> <a href="/tags/csapp/" style="font-size: 15px;">csapp</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/06/08/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC2%E7%AB%A0/">深入理解计算机系统学习笔记-第2章</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/06/06/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC1%E7%AB%A0/">深入理解计算机系统学习笔记-第1章</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C010-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E9%AB%98%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作010-实例教程（高级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C009-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%AD%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作009-实例教程（中级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C008-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E5%88%9D%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作008-实例教程（初级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C007-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E6%96%B0%E6%89%8B%E7%AF%87%EF%BC%89/">cs1.6地图制作007-实例教程（新手篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B7-%E9%AB%98%E9%9A%BE%E5%BA%A6%20copy/">amxx插件开发新手教程7-高难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B6-%E4%B8%AD%E9%9A%BE%E5%BA%A6/">amxx插件开发新手教程6-中难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/18/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B5-%E8%BD%BB%E9%9A%BE%E5%BA%A6/">amxx插件开发新手教程5-轻难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/18/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B4-%E8%BF%9B%E9%98%B6/">amxx插件开发新手教程4-进阶</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://gamebanana.com/" title="gamebanana" target="_blank">gamebanana</a><ul></ul><a href="https://rehlds.ru/" title="rehlds.ru" target="_blank">rehlds.ru</a><ul></ul><a href="http://tarimren.ysepan.com/" title="毛毛老公的CS空间" target="_blank">毛毛老公的CS空间</a><ul></ul><a href="http://351642983.ysepan.com/" title="CS1.6资源网盘" target="_blank">CS1.6资源网盘</a><ul></ul><a href="http://sum41.ysepan.com/" title="羊大侠网盘" target="_blank">羊大侠网盘</a><ul></ul><a href="http://hyyddx.ysepan.com/" title="B站-好鱼有点东西" target="_blank">B站-好鱼有点东西</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2023 <a href="/." rel="nofollow">无敌CS博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.js"></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0"></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div></body></html>

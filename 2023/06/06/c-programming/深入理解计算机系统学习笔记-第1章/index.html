@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="CS1.6服务器技术分享，包括CS1.6服务器搭建、地图制作、AMXX插件开发等"><meta name="google-site-verification" content="nD2LaPpjKWHdIFXVgELbbVkoUkdiksGRk8KPaTsvz7U"><meta name="baidu-site-verification" content="codeva-Z5rMAmVrVN"><title>深入理解计算机系统学习笔记-第1章 | 无敌CS博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/latest/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/grids-responsive-min.min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/latest/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = 'https://hm.baidu.com/hm.js?' + '1368248848730e2ee23faba2bc1db2d3';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();</script><script type="text/javascript" src="//lib.baomitu.com/clipboard.js/latest/clipboard.min.js"></script><script type="text/javascript" src="//lib.baomitu.com/toastr.js/latest/toastr.min.js"></script><link rel="stylesheet" href="//lib.baomitu.com/toastr.js/latest/toastr.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">深入理解计算机系统学习笔记-第1章</h1><a id="logo" href="/.">无敌CS博客</a><p class="description">wudics blog here to tell you how to do with cs1.6</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">深入理解计算机系统学习笔记-第1章</h1><div class="post-meta">2023-06-06<span> | </span><span class="category"><a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a class="disqus-comment-count" href="/2023/06/06/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC1%E7%AB%A0/#vcomment"><span class="valine-comment-count" data-xid="/2023/06/06/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC1%E7%AB%A0/"></span><span> 条评论</span></a><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8"><span class="toc-number">1.</span> <span class="toc-text">计算机系统漫游</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E5%B0%B1%E6%98%AF%E4%BD%8D-%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.1.</span> <span class="toc-text">信息就是位+上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%A2%AB%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E7%BF%BB%E8%AF%91%E6%88%90%E4%B8%8D%E5%90%8C%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">程序被其他程序翻译成不同的格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E6%98%AF%E5%A4%A7%E6%9C%89%E7%9B%8A%E5%A4%84%E7%9A%84"><span class="toc-number">1.3.</span> <span class="toc-text">了解编译系统如何工作是大有益处的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E8%AF%BB%E5%B9%B6%E8%A7%A3%E9%87%8A%E5%AD%98%E5%82%A8%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.</span> <span class="toc-text">处理器读并解释存储在内存中的指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90"><span class="toc-number">1.5.</span> <span class="toc-text">系统的硬件组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E8%87%B3%E5%85%B3%E9%87%8D%E8%A6%81"><span class="toc-number">1.6.</span> <span class="toc-text">高速缓存至关重要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87%E5%BD%A2%E6%88%90%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">1.7.</span> <span class="toc-text">存储设备形成层次结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E7%A1%AC%E4%BB%B6"><span class="toc-number">1.8.</span> <span class="toc-text">操作系统管理硬件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.8.1.</span> <span class="toc-text">进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.8.2.</span> <span class="toc-text">线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">1.8.3.</span> <span class="toc-text">虚拟内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6"><span class="toc-number">1.8.4.</span> <span class="toc-text">文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E4%B9%8B%E9%97%B4%E5%88%A9%E7%94%A8%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1"><span class="toc-number">1.9.</span> <span class="toc-text">系统之间利用网络通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E4%B8%BB%E9%A2%98"><span class="toc-number">1.10.</span> <span class="toc-text">重要主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Amdahl%E5%AE%9A%E5%BE%8B"><span class="toc-number">1.10.1.</span> <span class="toc-text">Amdahl定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C"><span class="toc-number">1.10.2.</span> <span class="toc-text">并发和并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%8A%BD%E8%B1%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">1.10.3.</span> <span class="toc-text">计算机系统中抽象的重要性</span></a></li></ol></li></ol></li></ol></div></div><div class="post-content"><p>本篇文章是对《深入理解计算机系统（第三版）》的学习笔记，对一些重点概念和图表做记录，以及写下一些自己的理解，从而使自己更轻松的掌握这门知识。通过对这本书的深入学习，并且完全理解底层计算机系统以及它对应用程序的影响，那么离成为“大牛”就不远了：</p>
+<ol>
+<li>该教材系统地介绍了整个计算机系统的工作原理，可帮助学生系统性地理解计算机如何执行程序、存储信息和通信；</li>
+<li>该教材非常强调实践，全书包括9个配套的实验，在这些实验中，学生需要攻破计算机系统、设计CPU、实现命令行解析器、根据缓存优化程序等，在新鲜有需的实验中理解系统原理，培养动手能力；</li>
+<li>该教材紧跟时代的发展，加入了x86-64指令集、Intel Core i7的虚拟地址结构、SSD磁盘、IPv6等新技术内容；</li>
+<li>该教材从程序员的角度看待计算机系统，重点讨论系统的不同结构对于上层应用软件编写、执行和数据存储的影响，以培养程序员在更广阔空间应用计算机系统知识的能力。</li>
+</ol>
+<h1 id="计算机系统漫游"><a href="#计算机系统漫游" class="headerlink" title="计算机系统漫游"></a>计算机系统漫游</h1><p>计算机系统是由硬件和系统软件组成的，它们共同工作来运行应用程序。</p>
+<p>本教材在linxu系统下，通过C语言演示一些重要思想和实践过程，如下，是C语言的一个HelloWorld程序。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hello.c</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello, World!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在hello.c文件中存储着上边可读的源代码，这是经过机器翻译并显示出来的。而实际该文件存储的是一系列的二进制数值，由ASCII码标准来表示的文本字符（当然，在现代计算机操作系统中，如果是中文环境的话通常使用GBK、UTF-8、UNICODE等编码格式）。</p>
+<p><img src="/images/cprogram/csapp-1-1.png"></p>
+<h2 id="信息就是位-上下文"><a href="#信息就是位-上下文" class="headerlink" title="信息就是位+上下文"></a>信息就是位+上下文</h2><p>hello.c的表示方法说明一个基本思想：系统中所有的信息———包括磁盘文件、内存中的程序、内存中存放的用户数据以及网络上传送的数据，都是由一串比特表示的。区分不同数据对象的唯一方法是我们读到这些数据对象时的<strong>上下文</strong>。比如，在不同上下文中，一个同样的字节序列可能表示一个整数、浮点数、字符串或者机器指令。</p>
+<blockquote>
+<p>用计算机表示的数字，其实是与实际的整数、实数是不相同的。计算机表示的数字，是对真值的有限近似值。</p>
+</blockquote>
+<h2 id="程序被其他程序翻译成不同的格式"><a href="#程序被其他程序翻译成不同的格式" class="headerlink" title="程序被其他程序翻译成不同的格式"></a>程序被其他程序翻译成不同的格式</h2><p>hello（不带后缀）程序的生命周期是从一个高级C语言程序开始的。即，从编写源码开始，到预处理，到编译，到汇编，最后到链接，分别经过了文本&#x2F;代码编辑器、预处理器cpp、编译器ccl、汇编器as、链接器ld等。</p>
+<p><img src="/images/cprogram/csapp-1-2.png"></p>
+<ul>
+<li>预处理阶段。预处理器根据以字符#开头的命令，修改原始的C程序源码。比如，hello.c中第1行的<code>#include &lt;stdio.h&gt;</code>命令告诉预处理器读取系统头文件stdio.h的内容，并把它直接插入程序文本中。结果就得到了另一个C程序源码，通常是以<code>.i</code>作为文件扩展名。</li>
+<li>编译阶段。编译器将文本文件hello.i翻译成文本文件hello.s，它是一个汇编语言程序源码。翻译成汇编语言的其中一个作用是，让C语言兼容其他高级语言，因为其他高级语言可能也会按照规范，将自己翻译成汇编语言。</li>
+<li>汇编阶段。接下来，汇编器将hello.s翻译成机器语言指令，并将结果保存在目标文件hello.o中。hello.o文件是一个二进制文件，它包含的17个字节是函数main的指令编码。</li>
+<li>链接阶段。请注意，hello程序调用了printf函数，它是每个C编译器都提供的标准C库中的一个函数。printf函数存在于一个名为printf.o的单独的预编译好了的目标文件中，而这个文件必须以某种方式合并到我们的hello.o程序中。链接器就负责处理这种合并。结果就得到hello文件，它是一个可执行目标文件（或者简称为可执行文件），可以被加载到内存中，由系统执行。</li>
+</ul>
+<h2 id="了解编译系统如何工作是大有益处的"><a href="#了解编译系统如何工作是大有益处的" class="headerlink" title="了解编译系统如何工作是大有益处的"></a>了解编译系统如何工作是大有益处的</h2><p>我们在实际开发过程中，可能会因为一些原因使得我们必须了解编译系统是如何工作的，例如：</p>
+<ul>
+<li>优化程序性能</li>
+<li>理解链接时出现的错误</li>
+<li>避免安全漏洞</li>
+</ul>
+<h2 id="处理器读并解释存储在内存中的指令"><a href="#处理器读并解释存储在内存中的指令" class="headerlink" title="处理器读并解释存储在内存中的指令"></a>处理器读并解释存储在内存中的指令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">linux&gt; ./hello</span><br><span class="line">Hello, World!</span><br><span class="line">linux&gt; </span><br></pre></td></tr></table></figure>
+
+<p>经过编译系统的编译后，生成了我们的可执行程序hello，并存放在磁盘中。在linux操作系统的shell中，执行hello程序。此时我们就会看到输出printf所输出的字样，并且在输出完毕后，shell会返回继续等待下一个输入的命令行。</p>
+<h2 id="系统的硬件组成"><a href="#系统的硬件组成" class="headerlink" title="系统的硬件组成"></a>系统的硬件组成</h2><p>一个典型的计算机系统通常包含总线、I&#x2F;O设备、主存、处理器等部件。</p>
+<p><img src="/images/cprogram/csapp-1-3.png"></p>
+<ul>
+<li>总线通常被设计成传送定长的字节块，也就是字（word）。目前流行的计算机系统有4字节（32位）的，也有8字节（64位）的。</li>
+<li>I&#x2F;O设备是多种多样的，网络也可作为一个I&#x2F;O，每个I&#x2F;O设备都是通过一个控制器或适配器与I&#x2F;O总线相连的（控制器或适配器可能是独立的，也可能被集成到主板芯片组或I&#x2F;O设备本身）。</li>
+<li>主存，即我们俗称的内存条，是一个临时存储设备，在处理器执行程序时，用来存放程序和程序处理的数据。物理上，由一组动态随机存储器（DRAM）芯片组成。逻辑上，是一个线性的字节数组，每个字节都有其唯一的地址（数组索引），这些地址是从零开始的。</li>
+<li>处理器，即中央处理单元（CPU），是解释（或执行）存储在主存中指令的引擎。CPU内部通常包含有程序计数器（PC）、算数&#x2F;逻辑单元（ALU）、寄存器文件等，另外为了加速CPU读写速度，在现代CPU中，还有其内部的缓存。</li>
+</ul>
+<p>回过头来，再看hello程序的执行过程：</p>
+<ol>
+<li>输入<code>./hello</code>时，shell程序会将输入的字符逐一读入寄存器，再把它存放到主存中。</li>
+<li>按下<code>回车键</code>时，shell程序开始执行系列指令来加载可执行程序hello文件，操作系统就会使用<strong>直接存储器存取（DMA）</strong>技术，使hello文件不经过CPU而直接被加载到主存中。</li>
+<li>一旦完成hello的主存加载，CPU将会执行hello程序的main函数的机器语言指令，将<code>Hello, World!</code>字符串中的字节从主存复制到寄存器文件，再从寄存器文件中复制到显示设备，最终显示在屏幕上。</li>
+</ol>
+<h2 id="高速缓存至关重要"><a href="#高速缓存至关重要" class="headerlink" title="高速缓存至关重要"></a>高速缓存至关重要</h2><p>在上面的hello执行示例中，有一个很重要的问题，就是系统在执行hello程序时，大量的时间被消耗在把信息从一个地方挪到另一个地方。首先是从磁盘读写到主存，接着在执行过程中，指令又从主存复制到CPU，还有屏幕打印出“Hello, World!”字样，从CPU到主存再到显示器I&#x2F;O设备，信息搬运的过程是极其消耗时间的。</p>
+<blockquote>
+<p>根据机械原理，较大的存储设备要比较小的存储设备运行慢，而快速设备的造价远高于同类的低速设备。</p>
+</blockquote>
+<p>随着半导体技术的进步，处理器和主存之间的差距还在持续增大（因为加快处理器的运行速度比加快主存的运行速度要容易和便宜得多）。</p>
+<p>为了弥补处理器和主存之间的读写速度差距，在现在的CPU设计中加入了<strong>高速缓存存储器</strong>，简称cache或高速缓存，作为暂时的集结区域，存放处理器近期可能会需要的信息。</p>
+<p>如图所示，是CPU芯片上的L1高速缓存，访问速度和寄存器一样块。另外，还有L2高速缓存，在CPU芯片外，通过一条特殊的总线连接到处理器。L1和L2高速缓存是用一种叫做静态随机访问存储器（SRAM）的技术实现的。这也是我们在购买CPU时，其参数所示的一级缓存、二级缓存。</p>
+<p><img src="/images/cprogram/csapp-1-4.png" alt="高速缓存存储器"></p>
+<h2 id="存储设备形成层次结构"><a href="#存储设备形成层次结构" class="headerlink" title="存储设备形成层次结构"></a>存储设备形成层次结构</h2><p>在处理器和一个较大较慢的设备（例如主存）之间插入一个更小更快的存储设备（例如高速缓存）的想法已经成为一个普遍的观念。实际上，每个计算机系统中的存储设备都被组织成了一个存储器层器结构。</p>
+<p>在这个层次结构中，从上至下，设备的访问速度越来越慢、容量越来越大，并且每字节的造价也越来越便宜。寄存器文件在层次结构中位于最顶部，也就是第0级或记为L0。这里我们展示的是三层高速缓存L1到L3，占据存储器层次结构的第1层到第3层。主存在第4层，以此类推。</p>
+<p><img src="/images/cprogram/csapp-1-5.png" alt="一个存储器层次结构的示例"></p>
+<p>存储器层次结构的主要思想是上一层的存储器作为低一层存储器的高速缓存。因此，寄存器文件是L1的高速缓存，L1是L2的高速缓存，L2是L3的高速缓存，L3是主存的高速缓存，而主存又是磁盘的高速缓存。在某些具体分布式文件系统的网络系统中，本地磁盘就是存储在其他系统中磁盘上的数据的高速缓存。</p>
+<h2 id="操作系统管理硬件"><a href="#操作系统管理硬件" class="headerlink" title="操作系统管理硬件"></a>操作系统管理硬件</h2><p>操作系统有两个基本功能：</p>
+<ol>
+<li>防止硬件被失控的应用程序滥用</li>
+<li>向应用程序提供简单一致的机制来控制复杂而又通常大不相同的低级硬件设备。</li>
+</ol>
+<p>如图计算机系统的分层视图所示，所有应用程序对硬件的操作尝试都必须通过操作系统。</p>
+<p><img src="/images/cprogram/csapp-1-6.png" alt="计算机系统的分层视图"></p>
+<p>操作系统通过以下几个基本的抽象概念来实现防止失控和一致性的这两个功能。如操作系统提供的抽象表示图所示：</p>
+<ol>
+<li>文件是对I&#x2F;O设备的抽象表示</li>
+<li>虚拟内存是对主存和磁盘I&#x2F;O设备的抽象表示</li>
+<li>进程是对处理器、主存和I&#x2F;O设备的抽象表示</li>
+</ol>
+<p><img src="/images/cprogram/csapp-1-7.png" alt="操作系统提供的抽象表示"></p>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>进程是操作系统对一个正在运行的程序的一种抽象。操作系统能够<strong>并发运行</strong>多个进程。</p>
+<p>操作系统保持跟踪进程运行所需的所有状态信息。这种状态，也就是上下文，包括许多信息，比如PC和寄存器文件的当前值，以及主存的内容。在任何一个时刻，单处理系统都只能执行一个进程的代码。</p>
+<p>当操作系统决定要把控制权从当前进程转移到某个新进程时，就会进行<strong>上下文切换</strong>，即保存当前进程的上下文、恢复新进程的上下文，然后将控制权传递到新进程。此时，新进程就会从它上次停止的地方开始。</p>
+<p>从一个进程到另一个进程的转换，是由操作系统<strong>内核（kernel）</strong>管理的。内核是操作系统代码常驻主存的部分。</p>
+<p>当应用程序需要操作系统的某些操作时，比如读写文件，它就执行一条特殊的<strong>系统调用（system call）</strong>指令，将控制权传递给内核。</p>
+<blockquote>
+<p>内核不是一个独立的进程。相反，它是系统管理全部进程所用代码和数据结构的集合。</p>
+</blockquote>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>在现代系统中，一个进程实际上可以由多个成为<strong>线程</strong>的执行单元组成，每个线程都运行在进程的上下文中，并共享同样的代码和全局数据。</p>
+<h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><p>虚拟内存是一个抽象概念，它为每个进程提供了一个假象，即每个进程都在独占地使用主存。每个进程看到的内存都是<em>一致的</em>，称为<strong>虚拟地址空间</strong>。</p>
+<p><img src="/images/cprogram/csapp-1-8.png" alt="Linux进程的虚拟地址空间"></p>
+<p>在Linux中，地址空间最上面的区域是<em>保留给操作系统中的代码和数据的</em>，这对所有进程来说都是一样的。地址空间的底部区域<em>存放用户进程定义的代码和数据</em>。</p>
+<p>每个进程看到的虚拟地址空间由大量<strong>准确定义的区域</strong>构成，每个区域都有专门的功能。如上图所示，我们从最低的地址开始，逐步向上介绍：</p>
+<ul>
+<li>程序代码和数据。对所有的进程来说，代码是从同一固定地址开始，紧接着的是和C全局变量相对应的数据位置。代码和数据区是直接接按照可执行程序目标文件的内容初始化的。</li>
+<li>堆。代码和数据区后紧随着的是运行时堆。代码和数据区在进程一开始运行时就被指定了大小，与此不同，当调用像malloc和free这样的C标准库函数时，堆可以在运行时动态地扩展和收缩。</li>
+<li>共享库。大约在地址空间的中间部分是一块用来存放像C标准库和数学库这样的共享库的代码和数据的区域。</li>
+<li>栈。位于用户虚拟地址空间顶部的是用户栈，编译器用它来实现函数调用。和堆一样，用户栈在程序执行期间可以动态地扩展和收缩。特别地，每次我们调用一个函数时，栈就会增加；从一个函数返回时，栈就会收缩。</li>
+<li>内核虚拟内存。地址空间顶部的区域是为内核保留的。不允许应用程序读写这个区域的内容或者直接调用内核代码定义的函数。相反，它们必须调用内核来执行这些操作。</li>
+</ul>
+<h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><p>文件就是字节序列。每个I&#x2F;O设备，包括磁盘、键盘、显示器，甚至网络，都可看成是文件。系统中的所有输入输出都是通过使用一小组成为Unix I&#x2F;O的系统函数调用读写文件来实现的。</p>
+<h2 id="系统之间利用网络通信"><a href="#系统之间利用网络通信" class="headerlink" title="系统之间利用网络通信"></a>系统之间利用网络通信</h2><p>网络可视为一个I&#x2F;O设备。</p>
+<h2 id="重要主题"><a href="#重要主题" class="headerlink" title="重要主题"></a>重要主题</h2><p>系统不仅仅只是硬件。系统是硬件和系统软件互相交织的集合体，它们必须共同协作以达到运行应用程序的最终目的。</p>
+<h3 id="Amdahl定律"><a href="#Amdahl定律" class="headerlink" title="Amdahl定律"></a>Amdahl定律</h3><p>Gene Amdahl，计算领域的早期先锋之一，对提升系统某一部分性能所带来的效果做出了简单却有见地的观察。这个观察被称为Amdahl定律（Amdahl’s law）。该定律的主要思想是，当我们对系统的某个部分加速时，其对系统整体性能的影响取决于该部分的重要性和加速程度。同样的，要想显著加速整个系统，必须提升全系统中相当大的部分的速度。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S=Told/Tnew</span><br><span class="line">S=<span class="number">1</span>/(<span class="number">1</span>-a)+a/k</span><br></pre></td></tr></table></figure>
+
+<p>上述是计算加速比S的公式，其中Told表示系统执行应用程序需要的时间，Tnew表示经过性能优化后系统执行应用程序需要的时间。a表示应用中某部分所需的执行时间aTold与Told的比，k表示该部分性能的提升比例。</p>
+<h3 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h3><p>两个驱动力：一个是我们想要计算机做得更多，另一个是我们想要计算机运行得更快。</p>
+<ul>
+<li>并发，是一个通用的概念，指一个同时具有多个活动的系统。</li>
+<li>并行，指的是用并发来使一个系统运行得更快。并行可以在计算机系统的多个抽象层次上运用。</li>
+</ul>
+<p>我们按照系统层次结构中由高到低的顺序重点强调三个层次。</p>
+<ol>
+<li>线程级并发<br>在以前，及时处理器必须在多个任务间切换，大多数实际的计算也都是由一个处理器来完成的，这种配置称为<strong>单处理器系统</strong>。<br>当构建一个由单操作系统内核控制的多处理器组成的系统时，我们就得到了一个<strong>多处理器系统</strong>。<br><strong>超线程</strong>，有时也称同时多线程，是一项允许一个CPU执行多个控制流的技术。也就是我们平时所说的2核4线程或者4核8线程之类的说法。<br><img src="/images/cprogram/csapp-1-9.png" alt="多核处理器的组织机构。4个处理器核集成在一个芯片上"></li>
+<li>指令级并行<br>在较低的抽象层次上，现代处理器可以同时执行多条指令的属性成为<strong>指令级并行</strong>。<br>其实每条指令从开始到结束需要长得多的时间，大约20个或者更多周期，但是处理器使用了非常多的聪明技巧来同时处理多达100条指令。<br>在<strong>流水线（pipelining）</strong>中，将执行一条指令所需要的活动划分成不同的步骤，将处理器的硬件组织成一系列的阶段，每个阶段执行一个步骤。这些阶段可以并行地操作，用来处理不同指令的不同部分。<br>如果处理器可以达到比一个周期一条指令更快的执行速率，就称之为<strong>超标量（super-scalar）</strong>处理器。</li>
+<li>单指令、多数据并行<br>在最低层次上，许多现代处理器拥有特殊的硬件，允许一条指令产生多个就可以并行执行的操作，这种方式成为<strong>单指令、多数据</strong>，即SIMD并行。<br>GCC支持向量数据类型。</li>
+</ol>
+<h3 id="计算机系统中抽象的重要性"><a href="#计算机系统中抽象的重要性" class="headerlink" title="计算机系统中抽象的重要性"></a>计算机系统中抽象的重要性</h3><p><img src="/images/cprogram/csapp-1-10.png" alt="计算机系统提供的一些抽象。计算机系统中的一个重大主题就是提供不同层次的抽象表示，来隐藏实际实现的复杂性"></p>
+<p>抽象的使用是计算机科学中最为重要的概念之一。如图所示，在处理器里，指令级架构提供了对实际处理器硬件的抽象。使用这个抽象，机器代码程序表现得就好像运行在一个一次只执行一条指令的处理器上。底层的硬件远比抽象描述的要复杂精细，它并行地执行多条指令，但又总是与那个简单有需的模型保持一致。只要执行模型一样，不同的处理器实现也能执行同样的机器代码（如x86-64指令集），而又提供不同的开销和性能。</p>
+</div><div class="tags"><a href="/tags/csapp"><i class="fa fa-tag">csapp</i></a></div><div class="post-nav"><a class="pre" href="/2023/06/08/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC2%E7%AB%A0/">深入理解计算机系统学习笔记-第2章</a><a class="next" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C010-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E9%AB%98%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作010-实例教程（高级篇）</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == 'true' ? true : false;
+var verify = 'false' == 'true' ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'LPmDnvJEI92SNW9V6j9OieMI-gzGzoHsz',
+  appKey:'segFEOA3MguYQKbzhkNRbaPd',
+  placeholder:'Just so so',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="https://www.wudics.com"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>wudics</p><a class="info-icon" href="mailto:176367820@qq.com" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/wudics" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C/">cs1.6地图制作</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E6%9C%8D%E5%8A%A1%E5%99%A8/">cs1.6服务器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/">cs1.6编程开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/cs1-6/" style="font-size: 15px;">cs1.6</a> <a href="/tags/maps/" style="font-size: 15px;">maps</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/vscode/" style="font-size: 15px;">vscode</a> <a href="/tags/edge/" style="font-size: 15px;">edge</a> <a href="/tags/nodejs/" style="font-size: 15px;">nodejs</a> <a href="/tags/forever/" style="font-size: 15px;">forever</a> <a href="/tags/win10/" style="font-size: 15px;">win10</a> <a href="/tags/display/" style="font-size: 15px;">display</a> <a href="/tags/frp/" style="font-size: 15px;">frp</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/veraycrypt/" style="font-size: 15px;">veraycrypt</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%8A%A0%E5%AF%86/" style="font-size: 15px;">文件加密</a> <a href="/tags/%E7%9B%98%E7%AC%A6%E9%9A%90%E8%97%8F/" style="font-size: 15px;">盘符隐藏</a> <a href="/tags/server/" style="font-size: 15px;">server</a> <a href="/tags/amxx/" style="font-size: 15px;">amxx</a> <a href="/tags/module/" style="font-size: 15px;">module</a> <a href="/tags/csapp/" style="font-size: 15px;">csapp</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/06/08/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC2%E7%AB%A0/">深入理解计算机系统学习笔记-第2章</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/06/06/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC1%E7%AB%A0/">深入理解计算机系统学习笔记-第1章</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C010-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E9%AB%98%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作010-实例教程（高级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C009-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%AD%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作009-实例教程（中级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C008-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E5%88%9D%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作008-实例教程（初级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C007-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E6%96%B0%E6%89%8B%E7%AF%87%EF%BC%89/">cs1.6地图制作007-实例教程（新手篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B7-%E9%AB%98%E9%9A%BE%E5%BA%A6%20copy/">amxx插件开发新手教程7-高难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B6-%E4%B8%AD%E9%9A%BE%E5%BA%A6/">amxx插件开发新手教程6-中难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/18/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B5-%E8%BD%BB%E9%9A%BE%E5%BA%A6/">amxx插件开发新手教程5-轻难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/18/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B4-%E8%BF%9B%E9%98%B6/">amxx插件开发新手教程4-进阶</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://gamebanana.com/" title="gamebanana" target="_blank">gamebanana</a><ul></ul><a href="https://rehlds.ru/" title="rehlds.ru" target="_blank">rehlds.ru</a><ul></ul><a href="http://tarimren.ysepan.com/" title="毛毛老公的CS空间" target="_blank">毛毛老公的CS空间</a><ul></ul><a href="http://351642983.ysepan.com/" title="CS1.6资源网盘" target="_blank">CS1.6资源网盘</a><ul></ul><a href="http://sum41.ysepan.com/" title="羊大侠网盘" target="_blank">羊大侠网盘</a><ul></ul><a href="http://hyyddx.ysepan.com/" title="B站-好鱼有点东西" target="_blank">B站-好鱼有点东西</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2023 <a href="/." rel="nofollow">无敌CS博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.js"></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0"></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div></body></html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="CS1.6服务器技术分享，包括CS1.6服务器搭建、地图制作、AMXX插件开发等"><meta name="google-site-verification" content="nD2LaPpjKWHdIFXVgELbbVkoUkdiksGRk8KPaTsvz7U"><meta name="baidu-site-verification" content="codeva-Z5rMAmVrVN"><title>VeraCrypt磁盘加密和隐藏加密盘符 | 无敌CS博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/latest/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/grids-responsive-min.min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/latest/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = 'https://hm.baidu.com/hm.js?' + '1368248848730e2ee23faba2bc1db2d3';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();</script><script type="text/javascript" src="//lib.baomitu.com/clipboard.js/latest/clipboard.min.js"></script><script type="text/javascript" src="//lib.baomitu.com/toastr.js/latest/toastr.min.js"></script><link rel="stylesheet" href="//lib.baomitu.com/toastr.js/latest/toastr.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">VeraCrypt磁盘加密和隐藏加密盘符</h1><a id="logo" href="/.">无敌CS博客</a><p class="description">wudics blog here to tell you how to do with cs1.6</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">VeraCrypt磁盘加密和隐藏加密盘符</h1><div class="post-meta">2023-03-05<span> | </span><span class="category"><a href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a class="disqus-comment-count" href="/2023/03/05/useful-tech-skill/VeraCrypt%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9A%90%E8%97%8F%E5%8A%A0%E5%AF%86%E7%9B%98%E7%AC%A6/#vcomment"><span class="valine-comment-count" data-xid="/2023/03/05/useful-tech-skill/VeraCrypt%E7%A3%81%E7%9B%98%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9A%90%E8%97%8F%E5%8A%A0%E5%AF%86%E7%9B%98%E7%AC%A6/"></span><span> 条评论</span></a><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#VeraCrypt%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">VeraCrypt下载和安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VeraCrypt%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">VeraCrypt使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAE%E7%9B%98%E5%8A%A0%E5%AF%86"><span class="toc-number">2.1.</span> <span class="toc-text">创建E盘加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E5%B7%B2%E7%BB%8F%E5%8A%A0%E5%AF%86%E7%9A%84E%E7%9B%98"><span class="toc-number">2.2.</span> <span class="toc-text">加载已经加密的E盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B8%E8%BD%BD%E5%8A%A0%E5%AF%86%E7%9B%98"><span class="toc-number">2.3.</span> <span class="toc-text">卸载加密盘</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9A%90%E8%97%8F%E5%8A%A0%E5%AF%86%E7%9B%98%E7%AC%A6"><span class="toc-number">3.</span> <span class="toc-text">隐藏加密盘符</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%B3%A8%E5%86%8C%E8%A1%A8"><span class="toc-number">3.1.</span> <span class="toc-text">修改注册表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NoDrives%E5%80%BC%E8%AF%A6%E8%A7%A3"><span class="toc-number">3.2.</span> <span class="toc-text">NoDrives值详解</span></a></li></ol></li></ol></div></div><div class="post-content"><p>VeraCrypt是一款开源免费的磁盘加密软件。它有3种创建加密卷的方式：<strong>一是</strong>以文件方式存储的文件型加密卷，这种方式具体表现出来就是一个后缀文件为<code>.hc</code>的文件（当然，后缀名可自定义，VeraCrypt加载时会校验识别）；<strong>二是</strong>加密非系统盘分区或者设备，就是可以直接加密D&#x2F;E&#x2F;F等盘符或者U盘等移动存储设备；<strong>三是</strong>加密windows或者linux的系统分区，使用这种方式，在系统启动时会提示要求输入密码进行解密才能正常启动操作系统。</p>
+<p>本文介绍第二种方式，即使用veracrypt加密windows的非系统分区<code>E盘</code>，并通过修改注册表隐藏加密后的E盘。</p>
+<h1 id="VeraCrypt下载和安装"><a href="#VeraCrypt下载和安装" class="headerlink" title="VeraCrypt下载和安装"></a>VeraCrypt下载和安装</h1><p><a target="_blank" rel="noopener" href="https://www.veracrypt.fr/">官网下载（https://www.veracrypt.fr/）</a><br><a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/5s38MPk83bB">备用下载（https://www.aliyundrive.com/s/5s38MPk83bB）</a></p>
+<p>下载windows安装包后，按照提示安装即可。安装完成后，桌面将会出现VeraCrypt程序的图标。</p>
+<p><img src="/images/useful-skill/vera-1.png"></p>
+<h1 id="VeraCrypt使用"><a href="#VeraCrypt使用" class="headerlink" title="VeraCrypt使用"></a>VeraCrypt使用</h1><h2 id="创建E盘加密"><a href="#创建E盘加密" class="headerlink" title="创建E盘加密"></a>创建E盘加密</h2><p>双击桌面的VeraCrypt图标运行，然后点击“创建加密卷”按钮。</p>
+<p><img src="/images/useful-skill/vera-2.png"></p>
+<p>然后选择“加密非系统分区&#x2F;设备”。</p>
+<p><img src="/images/useful-skill/vera-3.png"></p>
+<p>选择“标准VeraCrypt加密卷”。</p>
+<p><img src="/images/useful-skill/vera-4.png"></p>
+<p>点击“选择设备”，我们这里选择<code>E盘</code>。</p>
+<p><img src="/images/useful-skill/vera-5.png"></p>
+<p>这里<strong>必须</strong>选择“<strong>就地加密分区</strong>”，否则加密后已经存储的文件会丢失，并且如果以后想“永久解密”磁盘，选择“就地加密分区”还可以还原当前文件内容。</p>
+<p><img src="/images/useful-skill/vera-6.png"></p>
+<p>然后下一步选择加密算法，我们这里选择<code>AES</code>，继续下一步输入密码。</p>
+<p><img src="/images/useful-skill/vera-7.png"></p>
+<p>选择“无（最快）”擦除模式。</p>
+<p><img src="/images/useful-skill/vera-8.png"></p>
+<p>最后点击“加密”按钮即可开始加密磁盘。</p>
+<p><img src="/images/useful-skill/vera-9.png"></p>
+<p>至此，磁盘加密完成，由于加密过程涉及到重要文件，所以截图步骤比较多。</p>
+<h2 id="加载已经加密的E盘"><a href="#加载已经加密的E盘" class="headerlink" title="加载已经加密的E盘"></a>加载已经加密的E盘</h2><p>我们打开VeraCrypt，选中<code>H盘</code>，然后点击“选择设备”按钮，在弹出的对话框中，选择已经加密的<code>E盘</code>，最后点击“加载”按钮，输入密码后等待加载完成即可。</p>
+<p><img src="/images/useful-skill/vera-10.png"></p>
+<p>此时，系统盘符中就会多出一个<code>H盘</code>，我们进入H盘就可以看到我们的文件了。</p>
+<p><img src="/images/useful-skill/vera-11.png"></p>
+<h2 id="卸载加密盘"><a href="#卸载加密盘" class="headerlink" title="卸载加密盘"></a>卸载加密盘</h2><p>我们可以直接点击“全部卸载”按钮，也可以选中某个加密卷鼠标右键“卸载”。</p>
+<h1 id="隐藏加密盘符"><a href="#隐藏加密盘符" class="headerlink" title="隐藏加密盘符"></a>隐藏加密盘符</h1><p>在查看电脑盘符时，我们可以看到<code>E盘</code>的状态是无法使用的，而且双击<code>E盘</code>还会提示格式化选项，容易点错把文件给格式化了。</p>
+<p>我们现在会把E盘隐藏起来，这避免了误操作格式化磁盘，也能够对别人隐藏这个加密盘符。</p>
+<blockquote>
+<p>E盘隐藏之后，不影响VeraCrypt正常加载。</p>
+</blockquote>
+<h2 id="修改注册表"><a href="#修改注册表" class="headerlink" title="修改注册表"></a>修改注册表</h2><p>鼠标右键单击左下角win图标，选择“运行”，输入<code>regedit</code>回车。</p>
+<p><img src="/images/useful-skill/vera-12.png"></p>
+<p>在注册表编辑器中，依次展开：</p>
+<p><code>\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\</code></p>
+<p>然后在窗口右侧的空白处点击鼠标右键，选择<code>新建</code>-&gt;<code>新建DWORD（32位）值</code>，并将该值命名为<code>NoDrives</code>，然后我们选择“十进制”并把值设置为<code>16</code>（表示E盘）。</p>
+<p><img src="/images/useful-skill/vera-12.png"></p>
+<p>重启电脑，然后我们就会发现<code>E盘</code>已经隐藏起来了。不想隐藏了的话，可以直接删除<code>NoDrives</code>项，或者把值设置为<code>0</code>。</p>
+<h2 id="NoDrives值详解"><a href="#NoDrives值详解" class="headerlink" title="NoDrives值详解"></a>NoDrives值详解</h2><p>如表所示，是盘符号对应的十进制数值。</p>
+<table>
+<thead>
+<tr>
+<th align="center">盘符号</th>
+<th align="center">十进制值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">B</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">C</td>
+<td align="center">4</td>
+</tr>
+<tr>
+<td align="center">D</td>
+<td align="center">8</td>
+</tr>
+<tr>
+<td align="center">E</td>
+<td align="center">16</td>
+</tr>
+<tr>
+<td align="center">F</td>
+<td align="center">32</td>
+</tr>
+<tr>
+<td align="center">G</td>
+<td align="center">64</td>
+</tr>
+<tr>
+<td align="center">H</td>
+<td align="center">128</td>
+</tr>
+<tr>
+<td align="center">I</td>
+<td align="center">256</td>
+</tr>
+<tr>
+<td align="center">J</td>
+<td align="center">512</td>
+</tr>
+<tr>
+<td align="center">K</td>
+<td align="center">1024</td>
+</tr>
+<tr>
+<td align="center">L</td>
+<td align="center">2048</td>
+</tr>
+<tr>
+<td align="center">M</td>
+<td align="center">4096</td>
+</tr>
+<tr>
+<td align="center">N</td>
+<td align="center">8192</td>
+</tr>
+<tr>
+<td align="center">O</td>
+<td align="center">16384</td>
+</tr>
+<tr>
+<td align="center">P</td>
+<td align="center">32768</td>
+</tr>
+<tr>
+<td align="center">Q</td>
+<td align="center">65536</td>
+</tr>
+<tr>
+<td align="center">R</td>
+<td align="center">131072</td>
+</tr>
+<tr>
+<td align="center">S</td>
+<td align="center">262144</td>
+</tr>
+<tr>
+<td align="center">T</td>
+<td align="center">524288</td>
+</tr>
+<tr>
+<td align="center">U</td>
+<td align="center">1048576</td>
+</tr>
+<tr>
+<td align="center">V</td>
+<td align="center">2097152</td>
+</tr>
+<tr>
+<td align="center">W</td>
+<td align="center">4194304</td>
+</tr>
+<tr>
+<td align="center">X</td>
+<td align="center">8388608</td>
+</tr>
+<tr>
+<td align="center">Y</td>
+<td align="center">16777216</td>
+</tr>
+<tr>
+<td align="center">Z</td>
+<td align="center">33554432</td>
+</tr>
+<tr>
+<td align="center">所有</td>
+<td align="center">67108863</td>
+</tr>
+</tbody></table>
+<p>如之前我们隐藏的E盘，对应的十进制值就是16。</p>
+<blockquote>
+<p>如果我们需要同时隐藏多个盘符，例如同时隐藏D盘和E盘，那么我们在NoDrives中设置两个盘符十进制值相加的和即可，即D盘为8，E盘为16，那么隐藏D盘和E盘，则NoDrives设置为24。</p>
+</blockquote>
+</div><div class="tags"><a href="/tags/veraycrypt"><i class="fa fa-tag">veraycrypt</i></a><a href="/tags/文件加密"><i class="fa fa-tag">文件加密</i></a><a href="/tags/盘符隐藏"><i class="fa fa-tag">盘符隐藏</i></a></div><div class="post-nav"><a class="pre" href="/2023/03/05/cs-server/cs1.6%E6%AD%A3%E7%89%88steam%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%EF%BC%88windows%E7%8E%AF%E5%A2%83%EF%BC%89/">cs1.6正版steam服务器搭建（windows环境）</a><a class="next" href="/2023/03/01/useful-tech-skill/frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E4%BD%BF%E7%94%A8%E8%AF%A6%E8%A7%A3/">frp内网穿透使用详解</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == 'true' ? true : false;
+var verify = 'false' == 'true' ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'LPmDnvJEI92SNW9V6j9OieMI-gzGzoHsz',
+  appKey:'segFEOA3MguYQKbzhkNRbaPd',
+  placeholder:'Just so so',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="https://www.wudics.com"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>wudics</p><a class="info-icon" href="mailto:176367820@qq.com" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/wudics" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C/">cs1.6地图制作</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E6%9C%8D%E5%8A%A1%E5%99%A8/">cs1.6服务器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/">cs1.6编程开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/cs1-6/" style="font-size: 15px;">cs1.6</a> <a href="/tags/maps/" style="font-size: 15px;">maps</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/vscode/" style="font-size: 15px;">vscode</a> <a href="/tags/edge/" style="font-size: 15px;">edge</a> <a href="/tags/nodejs/" style="font-size: 15px;">nodejs</a> <a href="/tags/forever/" style="font-size: 15px;">forever</a> <a href="/tags/win10/" style="font-size: 15px;">win10</a> <a href="/tags/display/" style="font-size: 15px;">display</a> <a href="/tags/frp/" style="font-size: 15px;">frp</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/veraycrypt/" style="font-size: 15px;">veraycrypt</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%8A%A0%E5%AF%86/" style="font-size: 15px;">文件加密</a> <a href="/tags/%E7%9B%98%E7%AC%A6%E9%9A%90%E8%97%8F/" style="font-size: 15px;">盘符隐藏</a> <a href="/tags/server/" style="font-size: 15px;">server</a> <a href="/tags/amxx/" style="font-size: 15px;">amxx</a> <a href="/tags/module/" style="font-size: 15px;">module</a> <a href="/tags/csapp/" style="font-size: 15px;">csapp</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/06/08/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC2%E7%AB%A0/">深入理解计算机系统学习笔记-第2章</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/06/06/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC1%E7%AB%A0/">深入理解计算机系统学习笔记-第1章</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C010-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E9%AB%98%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作010-实例教程（高级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C009-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%AD%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作009-实例教程（中级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C008-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E5%88%9D%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作008-实例教程（初级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C007-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E6%96%B0%E6%89%8B%E7%AF%87%EF%BC%89/">cs1.6地图制作007-实例教程（新手篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B7-%E9%AB%98%E9%9A%BE%E5%BA%A6%20copy/">amxx插件开发新手教程7-高难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B6-%E4%B8%AD%E9%9A%BE%E5%BA%A6/">amxx插件开发新手教程6-中难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/18/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B5-%E8%BD%BB%E9%9A%BE%E5%BA%A6/">amxx插件开发新手教程5-轻难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/18/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B4-%E8%BF%9B%E9%98%B6/">amxx插件开发新手教程4-进阶</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://gamebanana.com/" title="gamebanana" target="_blank">gamebanana</a><ul></ul><a href="https://rehlds.ru/" title="rehlds.ru" target="_blank">rehlds.ru</a><ul></ul><a href="http://tarimren.ysepan.com/" title="毛毛老公的CS空间" target="_blank">毛毛老公的CS空间</a><ul></ul><a href="http://351642983.ysepan.com/" title="CS1.6资源网盘" target="_blank">CS1.6资源网盘</a><ul></ul><a href="http://sum41.ysepan.com/" title="羊大侠网盘" target="_blank">羊大侠网盘</a><ul></ul><a href="http://hyyddx.ysepan.com/" title="B站-好鱼有点东西" target="_blank">B站-好鱼有点东西</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2023 <a href="/." rel="nofollow">无敌CS博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.js"></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0"></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div></body></html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="CS1.6服务器技术分享，包括CS1.6服务器搭建、地图制作、AMXX插件开发等"><meta name="google-site-verification" content="nD2LaPpjKWHdIFXVgELbbVkoUkdiksGRk8KPaTsvz7U"><meta name="baidu-site-verification" content="codeva-Z5rMAmVrVN"><title>amxx插件开发新手教程7-高难度 | 无敌CS博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/latest/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/latest/grids-responsive-min.min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/latest/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement('script');
+  hm.src = 'https://hm.baidu.com/hm.js?' + '1368248848730e2ee23faba2bc1db2d3';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();</script><script type="text/javascript" src="//lib.baomitu.com/clipboard.js/latest/clipboard.min.js"></script><script type="text/javascript" src="//lib.baomitu.com/toastr.js/latest/toastr.min.js"></script><link rel="stylesheet" href="//lib.baomitu.com/toastr.js/latest/toastr.min.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">amxx插件开发新手教程7-高难度</h1><a id="logo" href="/.">无敌CS博客</a><p class="description">wudics blog here to tell you how to do with cs1.6</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">amxx插件开发新手教程7-高难度</h1><div class="post-meta">2023-05-19<span> | </span><span class="category"><a href="/categories/cs1-6%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/">cs1.6编程开发</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a class="disqus-comment-count" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B7-%E9%AB%98%E9%9A%BE%E5%BA%A6%20copy/#vcomment"><span class="valine-comment-count" data-xid="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B7-%E9%AB%98%E9%9A%BE%E5%BA%A6%20copy/"></span><span> 条评论</span></a><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CreateEntity%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BD%93"><span class="toc-number">2.</span> <span class="toc-text">CreateEntity创建实体</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BD%93%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">创建实体有什么用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BD%93%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">基础创建实体的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SetModel%E8%AE%BE%E5%AE%9A%E5%AE%9E%E4%BD%93%E5%A4%96%E8%A7%82"><span class="toc-number">2.3.</span> <span class="toc-text">SetModel设定实体外观</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#set-pev%E8%AE%BE%E5%AE%9A%E5%AE%9E%E4%BD%93%E5%9D%90%E6%A0%87"><span class="toc-number">2.4.</span> <span class="toc-text">set_pev设定实体坐标</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Touch%E7%A2%B0%E6%92%9E"><span class="toc-number">3.</span> <span class="toc-text">Touch碰撞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Think%E6%80%9D%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">Think思考</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">5.</span> <span class="toc-text">参考文献</span></a></li></ol></div></div><div class="post-content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>我们这一章节将会再深入了解amxx插件的开发，了解实体创建createentity、实体碰撞touch和实体思考think等内容。有疑问可以在文章底部留言。</p>
+<h1 id="CreateEntity创建实体"><a href="#CreateEntity创建实体" class="headerlink" title="CreateEntity创建实体"></a>CreateEntity创建实体</h1><h2 id="创建实体有什么用"><a href="#创建实体有什么用" class="headerlink" title="创建实体有什么用"></a>创建实体有什么用</h2><p>游戏中创建实体，可以做各种各样的事情，比如AI(NPC)，导弹（或追踪导弹），带抛物线的榴弹，以及各种各样的实体类武器，比如弓弩射出去的带<strong>延迟飞行</strong>的箭</p>
+<p>虽然上面看上去可以实现许多不同的功能，但我们必须要从最基础的实体开始创建</p>
+<h2 id="基础创建实体的方法"><a href="#基础创建实体的方法" class="headerlink" title="基础创建实体的方法"></a>基础创建实体的方法</h2><p>我们需要用到的是<code>include/fakemeta_util.inc</code>这个模块的<code>fm_create_entity</code>函数</p>
+<p>代码看起来像这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">fm_create_entity</span>(<span class="string">&quot;实体名&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>实体名</code>部分是需要创建什么实体，一般来说<code>创建的实体名</code>，如果是自定义的第三方实体，那么一般是<code>info_target</code></p>
+<p>所以代码就是这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">fm_create_entity</span>(<span class="string">&quot;info_target&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>现在我们假设已经创建了实体，可是应该怎么设置呢？</p>
+<p>这时候我们需要用到之前学到的变量来<code>存储</code>这个实体</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ent <span class="comment">//新建变量，名字为 ent</span></span><br></pre></td></tr></table></figure>
+
+<p>这样的一个定义，即新建了一个变量<br>那么我们应该怎么存储下来？</p>
+<p>配合<code>=</code>就可以让这个变量存储指定的东西</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将 ent 变量存储为 `创建的这个实体`</span></span><br><span class="line"><span class="keyword">new</span> ent = <span class="built_in">fm_create_entity</span>(<span class="string">&quot;info_target&quot;</span>) </span><br></pre></td></tr></table></figure>
+
+<p>除了基础创建部分，还需要加入一个<code>判断</code>，来判断是否<code>有效以及无效</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断写在 `参数的那个东西` 是否是有效的</span></span><br><span class="line"><span class="comment">//如果无效直接使用会造成游戏崩溃，以及别的一些什么</span></span><br><span class="line"><span class="comment">//返回值为 （1=有效，0=无效）</span></span><br><span class="line"><span class="comment">// 代码为：</span></span><br><span class="line"><span class="built_in">pev_valid</span>(实体) </span><br><span class="line"><span class="comment">//判断有效</span></span><br><span class="line"><span class="comment">//不需要特地加个 `== 1` ，因为默认就是1</span></span><br><span class="line"><span class="keyword">if</span>( <span class="built_in">pev_valid</span>(实体) ) </span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果判断无效的话，在`if`判断的括号那加个 `!` 反义符号即可</span></span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">pev_valid</span>(实体) )</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以代码就是这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//新建 ent变量，用来存储创建的那个实体</span></span><br><span class="line"><span class="keyword">new</span> ent = <span class="built_in">fm_create_entity</span>(<span class="string">&quot;info_target&quot;</span>)</span><br><span class="line"><span class="comment">//如果ent变量中的这个实体是无效的话 那么返回，不继续往下执行</span></span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">pev_valid</span>(ent)) <span class="keyword">return</span>  </span><br></pre></td></tr></table></figure>
+
+<p>当然，这样只是创建了一个实体，它不具备任何功能，所以如果编译成为插件后，触发这个代码部分，在游戏中也不会显示出来，也没有任何变化</p>
+<h2 id="SetModel设定实体外观"><a href="#SetModel设定实体外观" class="headerlink" title="SetModel设定实体外观"></a>SetModel设定实体外观</h2><p>我们现在已经创建出来了一个实体，但是它不具备任何外观，所以在游戏中是看不见的</p>
+<p>那么我们需要做什么？才能让他在游戏中显示出来<br>那就是<code>赋予外观</code>，通俗的说，他没有<code>模型</code>，当我们赋予实体模型后他就能看见了</p>
+<p>所以我们把上面的代码，原封不动的写到这里</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ent = <span class="built_in">fm_create_entity</span>(<span class="string">&quot;info_target&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">pev_valid</span>(ent)) <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+
+<p>现在要做的就是让这个实体，能在游戏中看见</p>
+<p>赋予模型的代码可以从<code>多个模块</code>里面获取到，这里我们用<code>fakemeta</code>模块来着重讲解，其代码为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EngFunc_SetModel</span><br></pre></td></tr></table></figure>
+
+<p>这个代码是用来设置模型的（模块引用于<code>fakemeta.inc</code>）</p>
+<p>我们可以用<code>SetModel</code>来修改模型，但对于<strong>玩家本身</strong>是没有效果的，常用于自定义的第三方实体，也可以修改一些特定实体（但是对于<strong>地图中的玻璃</strong>似乎没效果）</p>
+<p>通过<code>EngFunc_SetModel</code>来修改模型，很简单。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//修改模型（SetModel）</span></span><br><span class="line"><span class="comment">//参数1：实体</span></span><br><span class="line"><span class="comment">//参数2：需要设定模型的路径</span></span><br><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetModel, 实体, <span class="string">&quot;模型路径&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其中，模型路径不是特指的<code>models/</code>， 也包含<code>sprites/</code></p>
+<p>我们以手雷模型（路径为：<code>models/w_hegrenade.mdl</code>） 做演示，可推出代码为</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetModel, 实体, <span class="string">&quot;models/w_hegrenade.mdl&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>当我们把之前的<code>创建实体部分</code>组合后，就会变成下面这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ent = <span class="built_in">fm_create_entity</span>(<span class="string">&quot;info_target&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">pev_valid</span>(ent)) <span class="keyword">return</span></span><br><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetModel, ent, <span class="string">&quot;models/w_hegrenade.mdl&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这样就会赋予实体正确的模型了</p>
+<p>需要注意：不论如何模型，都需要<code>缓存（Precache）</code>再用，如果不缓存直接设定模型的话，会导致游戏报错出现<code>No Precache（未缓存）</code>的致命错误，大家写代码的时候要注意这一点。</p>
+<h2 id="set-pev设定实体坐标"><a href="#set-pev设定实体坐标" class="headerlink" title="set_pev设定实体坐标"></a>set_pev设定实体坐标</h2><p>此时，我们很有可能看不到我们的实体。为什么呢？因为这个实体没有<code>设定坐标</code>，没有设置坐标的实体 他们的初始坐标都是0轴原点，即：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`X`: <span class="number">0.0</span>  `Y`:<span class="number">0.0</span>  `Z`: <span class="number">0.0</span></span><br></pre></td></tr></table></figure>
+
+<p>所以我们必须设置一个能让我们看见的<code>坐标</code>才可以</p>
+<p>坐标设定代码看上去像这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set_pev</span>(实体, pev_origin, 坐标三轴[X][Y][Z])</span><br></pre></td></tr></table></figure>
+
+<p><strong>那怎么确定坐标？</strong></p>
+<p>比如要获取我们玩家自己的<code>所在位置</code>可以这样写</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Float:org[<span class="number">3</span>]</span><br><span class="line"><span class="built_in">pev</span>(id, pev_origin, org)</span><br></pre></td></tr></table></figure>
+
+<p>其中通过数组<code>org</code>所存储的<code>[0]</code>,<code>[1]</code>,<code>[2]</code>也就是坐标基础系轴</p>
+<blockquote>
+<p>那么我们稍稍延伸一下，如果这样可以获取到当前我们所在的位置，那么我们可不可以 把实体也设置到这个坐标来？</p>
+</blockquote>
+<p>看上去这样的思路没什么问题，但是实际我们会遇到一个问题</p>
+<p>这个实体和玩家卡在一起了，因为实体的出生坐标是取定于<code>玩家所在位置</code></p>
+<p>那么我们怎么解决？</p>
+<p>虽然看上去这样会冲突，那么其实我们只需要把坐标稍稍向前或者偏移一点就可以让实体创建后不和我们自己卡在一起</p>
+<p>至于怎么偏移，方法有很多，这里举两种简单的方法</p>
+<p><strong>方法（1）：向自己瞄准的方向进行偏移</strong></p>
+<p>这里我们会用到<code>velocity_by_bim</code>来计算一个<code>向量</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">velocity_by_aim</span>(目标索引, 长度, 输出的向量)</span><br></pre></td></tr></table></figure>
+
+<p><strong>这怎么理解？</strong></p>
+<ul>
+<li>首先目标索引是代表需要让谁来计算这个，因为是我们自己所以这里可以写成<code>id</code>（也可以是其他，只要自己记得住就行）</li>
+<li>中间的参数是需要填写一个向量长度，比如<code>200</code>,<code>300</code>什么的，但是由于服务器参数<code>sv_maxvelocity</code>的限制，所以尽量不要超过<code>2000</code></li>
+<li>第三个参数，其实也就是输出，它输出的方式和<code>pev_origin</code>差不多，也是三维数组</li>
+</ul>
+<p>所以，如果我们要计算一个，<strong>200长度的前方偏移向量</strong>可以这样写</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Float:vel[<span class="number">3</span>]</span><br><span class="line"><span class="built_in">velocity_by_aim</span>(id, <span class="number">200</span>, vel)</span><br></pre></td></tr></table></figure>
+
+<p>其中导出的<code>vel</code>，就是我们需要的偏移向量</p>
+<p>但仅仅这样还不够，因为这只是偏移向量，我们需要的最终目的是<code>偏移后的坐标</code></p>
+<p>所以我们还需要让<code>坐标</code>和<code>偏移</code>进行相乘</p>
+<p>我们可以用<code>xs_vec_add</code>来完成数组相乘</p>
+<p>这个模块在<code>include/xs.inc</code>，以后经常会用到的</p>
+<p>如果我们需要用<code>vel</code>和<code>org</code>这两个数组来相乘，代码看上去像这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">xs_vec_add</span>(vel, org, vec3) <span class="comment">//相乘以计算偏移 vec3 得出结果</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>上方演示所用到的<code>vec3</code>其实可以不用写，因为那个代表最终输出，其实可以直接写成<code>org</code>，因为最终计算后需要使用的就是<code>org</code></p>
+</blockquote>
+<p>简单的代码看上去是这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">xs_vec_add</span>(vel, org, org) <span class="comment">//相乘以计算偏移 org 得出结果</span></span><br></pre></td></tr></table></figure>
+
+<p>那么，我们把上面的代码进行组合可以得到如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ent = <span class="built_in">fm_create_entity</span>(<span class="string">&quot;info_target&quot;</span>) <span class="comment">//创建 info_target 实体</span></span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">pev_valid</span>(ent)) <span class="keyword">return</span> <span class="comment">//如果无效就返回</span></span><br><span class="line"><span class="keyword">new</span> Float:org[<span class="number">3</span>]</span><br><span class="line"><span class="built_in">pev</span>(id, pev_origin, org) <span class="comment">//取玩家自己的坐标存储到 org 数组变量中</span></span><br><span class="line"><span class="keyword">new</span> Float:vel[<span class="number">3</span>] <span class="comment">//新建数组变量 vel ，用来存储计算后的偏移</span></span><br><span class="line"><span class="built_in">velocity_by_aim</span>(id, <span class="number">200</span>, vel) <span class="comment">// 通过玩家瞄准方向，计算200的偏移长度，将结果存储到 vel 变量中</span></span><br><span class="line"><span class="built_in">xs_vec_add</span>(vel, org, org) <span class="comment">//将 偏移后的vel 和 玩家当前坐标进行相乘，得到偏移后的坐标坐标（也就是玩家瞄准方向再加200长度的一个点）</span></span><br><span class="line"><span class="built_in">set_pev</span>(ent, pev_origin, org) <span class="comment">//设定实体到这个位置</span></span><br><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetModel, ent, <span class="string">&quot;models/w_hegrenade.mdl&quot;</span>) <span class="comment">//为实体设定一个外观</span></span><br></pre></td></tr></table></figure>
+
+<p>这个<code>方法1</code>看上去可能会稍稍复杂一些</p>
+<p><strong>方法 （2）：直接偏移</strong></p>
+<p>这次，我们可以不用<code>velocity_by_aim</code>，我们可以用取到的<code>org</code>数组中的值来直接加一点偏移</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Float:org[<span class="number">3</span>]</span><br><span class="line"><span class="built_in">pev</span>(id, pev_origin, org) <span class="comment">//获取id索引的坐标系位置，将结果存储到 org数组中</span></span><br></pre></td></tr></table></figure>
+
+<p>上面这样是一个标准的坐标系获取方法，那么我们怎么偏移呢，因为<em>方法2</em>不用到<code>velocity_by_aim</code>，我们知道坐标是由<code>三个数组</code>组成的，所以我们可以直接将某个数组里面的值加一点或者减去一些</p>
+<p>代码看上去是这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Float:org[<span class="number">3</span>]</span><br><span class="line"><span class="built_in">pev</span>(id, pev_origin, org) <span class="comment">//获取id索引的坐标系位置，将结果存储到 org数组中</span></span><br><span class="line">org[<span class="number">1</span>] += <span class="number">33.0</span> <span class="comment">// org[1] 代表 XYZ轴中的 Y 轴，对Y轴加一点值，以产生偏移</span></span><br></pre></td></tr></table></figure>
+
+<p>现在就可以得到一个 已经被偏移的<code>org</code>坐标数组，虽然没有偏移多少，但是已经不会和玩家处于同一个坐标，所以不会卡住</p>
+<p>所以完整代码是这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ent = <span class="built_in">fm_create_entity</span>(<span class="string">&quot;info_target&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">pev_valid</span>(ent)) <span class="keyword">return</span></span><br><span class="line"><span class="keyword">new</span> Float:org[<span class="number">3</span>]</span><br><span class="line"><span class="built_in">pev</span>(id, pev_origin, org) <span class="comment">//取玩家自己的坐标存储到 org 数组变量中</span></span><br><span class="line">org[<span class="number">1</span>] += <span class="number">33.0</span></span><br><span class="line"><span class="built_in">set_pev</span>(ent, pev_origin, org) <span class="comment">//设定实体到已经偏移的坐标系中</span></span><br><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetModel, ent, <span class="string">&quot;models/w_hegrenade.mdl&quot;</span>) <span class="comment">//为实体设定一个外观</span></span><br></pre></td></tr></table></figure>
+
+<p>这样我们就可以做出一个没有任何功能，但是可以看见的实体，外观被赋予是手雷，而且由于我们没有设置<code>pev_solid</code>所以在游戏中测试中，这个实体是可以被玩家穿过去的，也就是<code>看得见摸不着</code>的存在</p>
+<p>设置实体模型尽量在<code>pev_origin</code>之后进行，最大限度避免创建出来看不见的问题</p>
+<h1 id="Touch碰撞"><a href="#Touch碰撞" class="headerlink" title="Touch碰撞"></a>Touch碰撞</h1><p>我们会在游戏中看见一些的碰撞效果，比如：手雷扔出去后撞击在障碍物上弹开</p>
+<p>这里我们用<code>fakemeta</code>模块来演示</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">plugin_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">register_forward</span>(FM_Touch, <span class="string">&quot;碰撞事件触发函数&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>碰撞触发的函数中，需要两个参数 </p>
+<p>我们用弩箭来飞出去撞击到目标来表示这两者的关系：</p>
+<ol>
+<li>弩箭实体</li>
+<li>弩箭实体撞击到了谁</li>
+</ol>
+<p>所以代码是这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">plugin_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">register_forward</span>(FM_Touch, <span class="string">&quot;碰撞事件触发函数&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> 碰撞事件触发函数(实体, 被撞击者)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们用之前学到的创建实体，来做个实体撞击效果吧</p>
+<p>首先我们上面的代码抄下来</p>
+<p>这里我们不用到<em>方法1</em>或<em>方法2</em>的偏移，我们直接使用我们自己的坐标</p>
+<p>那你可能会说，这样做不是会让实体和玩家卡在一起吗<br>没错，所以这里我们要用另一个解决方法，在不偏移坐标的情况下，让实体正常出现，并且不和玩家卡住</p>
+<p>这里我们要用到的是<code>pev_owner</code>的owner翻译过来的话是主人</p>
+<p>也就是我们需要为<code>实体</code>设置一个<code>主人</code>，只要任何一个实体有了owner就不会和主人碰撞，如果那个实体有阻挡效果，作为<code>主人</code>的你也可以轻易穿过去</p>
+<p><strong>那应该怎么写？</strong></p>
+<p>很简单，为实体赋予主人是你自己即可</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set_pev</span>(ent, pev_owner, id)</span><br></pre></td></tr></table></figure>
+
+<p>当然，仅此这样还不够。为了做出碰撞效果我们还需要设置<code>pev_solid</code>也就是阻挡类型</p>
+<p><code>pev_solid</code>有几个参数，我们在设置的时候可以直接设置这些参数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对其他实体没有任何作用，例如不碰撞</span></span><br><span class="line">SOLID_NOT  = <span class="number">0</span>  </span><br><span class="line"><span class="comment">//与实体边缘发生碰撞效果，但不会挡住实体</span></span><br><span class="line">SOLID.TRIGGER = <span class="number">1</span> </span><br><span class="line"><span class="comment">//与实体边缘发生碰撞效果，挡住实体</span></span><br><span class="line">SOLID.BBOX = <span class="number">2</span> </span><br><span class="line"><span class="comment">//与实体边缘发生碰撞效果,但这个实体必须不在地上(被撞的那个实体)</span></span><br><span class="line">S0LID_SLIDEB0X = <span class="number">3</span></span><br><span class="line"><span class="comment">// BSP clip,与实睞的边缘发生碰撞效果,挡住实体 注：BSP dp似乎是可以穿过一些固阼,例如仓库门口对面的[中间有好多洞]的门(桥下方)</span></span><br><span class="line">SOLID.BSP = <span class="number">4</span> </span><br></pre></td></tr></table></figure>
+
+<p>那么如果我们要写个，可以产生碰撞并且和<code>主人</code>不会发生碰撞的效果应该怎么写？</p>
+<p>我们需要用到<code>SOLID_BBOX</code>他可以产生阻挡效果，大部分导弹或者榴弹实体都是用这个</p>
+<blockquote>
+<p>注意：<code>SOLID_BBOX</code>必须全部大写。当然，如果你觉得记住这么多英文太麻烦，也可以直接用他所对应的数字来表示，它对应的是<code>2</code></p>
+</blockquote>
+<p><em>标准写法：</em></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set_pev</span>(ent, pev_solid, SOLID_BBOX)</span><br></pre></td></tr></table></figure>
+
+<p><em>比较容易的写法：</em></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set_pev</span>(<span class="built_in">set_pev</span>(ent, pev_solid, <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<p><strong>仅此而已就可以做出一个阻挡的实体了吗？</strong></p>
+<p>并不是这样，还需要为这个实体设置一个大小，才可以产生真正的碰撞效果，设想一下，如果一个实体没有大小，即使他属性是可以碰撞，那么也撞不到什么东西</p>
+<p>数组一共有三个，也就是<code>[0], [1], [2]</code></p>
+<p>如果用代码表示可以是这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Float:MinSize[<span class="number">3</span>]</span><br><span class="line">MinSize[<span class="number">0</span>] = <span class="number">-1.0</span></span><br><span class="line">MinSize[<span class="number">1</span>] = <span class="number">-1.0</span></span><br><span class="line">MinSize[<span class="number">2</span>] = <span class="number">-1.0</span></span><br></pre></td></tr></table></figure>
+
+<p>但我们通常不这样写，这样会出现多行代码<br>像下面这样是标准写法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetSize, ent, &#123;<span class="number">-1.0</span>, <span class="number">-1.0</span>, <span class="number">-1.0</span>&#125;, &#123;<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>怎么理解？</strong></p>
+<p>比如玩家的大小是 16 16 36</p>
+<p>那么如果用负和正来表达就是</p>
+<ul>
+<li>负 -16.0, -16.0, -36.0</li>
+<li>正 16.0，16.0，36.0</li>
+</ul>
+<p>当然为了准确性，必须添加小数点以成为浮点值</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetSize, ent, &#123;<span class="number">-16.0</span>, <span class="number">-16.0</span>, <span class="number">-16.0</span>&#125;, &#123;<span class="number">16.0</span>, <span class="number">16.0</span>, <span class="number">36.0</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>注意<code>&#123;&#125;</code>和<code>()</code>的区别，不要写反了，不然编译器会报错</p>
+<p><strong>这个就是碰撞的实体？</strong></p>
+<p>是的，不过显然我们要做的碰撞面积没有那么大<br>我们可以在这个范围上缩小一些</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetSize, ent, &#123;<span class="number">-1.0</span>, <span class="number">-1.0</span>, <span class="number">-1.0</span>&#125;, &#123;<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>你可能也注意到了，参数组内的<code>&#123;&#125;</code>负和正的值大小范围都是一致的<br>是的，这样就是一个标准的正方形，对于碰撞的物体来说，这样显然是很完美的</p>
+<blockquote>
+<p>注意：前面是 -1.0, -1.0, -1.0 ，那么后面也应该是 1.0, 1.0, 1.0<br>当然也有例外，但是不能前面为<code>正数</code>开头</p>
+</blockquote>
+<p>如果像下面这样写，在编译时候不会出现错误，但是游戏中创建实体的时候，游戏会崩溃出现一个错误对话框<code>(Box Min/Max)</code>什么的，然后游戏崩溃。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetSize, ent, &#123;<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>&#125;, &#123;<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>所以要注意一下值，不要写错了。</p>
+<p>那么我们把上面的代码和当前所讲到的进行组合，就可以得出下面的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ent = <span class="built_in">fm_create_entity</span>(<span class="string">&quot;info_target&quot;</span>)</span><br><span class="line"><span class="keyword">if</span>(!<span class="built_in">pev_valid</span>(ent)) <span class="keyword">return</span></span><br><span class="line"><span class="keyword">new</span> Float:org[<span class="number">3</span>]</span><br><span class="line"><span class="built_in">pev</span>(id, pev_origin, org) <span class="comment">//取玩家自己的坐标存储到 org 数组变量中</span></span><br><span class="line"><span class="built_in">set_pev</span>(ent, pev_origin, org) <span class="comment">//设定实体到已经偏移的坐标系中</span></span><br><span class="line"><span class="built_in">set_pev</span>(ent, pev_solid, <span class="number">2</span>) <span class="comment">// 设定实体的穿透类型，这里的2 代表 `SOLID_BBOX` ，只要能记住那么为了省事可以这样写数字</span></span><br><span class="line"><span class="built_in">set_pev</span>(ent, pev_owner, id) <span class="comment">//设定实体的主人为 `id` 也就是 主人为 `谁创建了这个实体` 那个人</span></span><br><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetModel, ent, <span class="string">&quot;models/w_hegrenade.mdl&quot;</span>)</span><br><span class="line"><span class="comment">//为实体设定一个外观</span></span><br><span class="line"><span class="built_in">engfunc</span>(EngFunc_SetSize, ent, &#123;<span class="number">-1.0</span>, <span class="number">-1.0</span>, <span class="number">-1.0</span>&#125;, &#123;<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>&#125;) <span class="comment">//为实体设定一个大小</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>为实体设置的属性完成了？</strong></p>
+<p>看上去是的，不过这个实体只是拥有碰撞属性，而且我们也没有设置 <code>pev_movetype</code>所以默认是<code>0</code>，换句话说，这个<code>手雷</code>会浮在空中，不移动，既然他不移动，换句话说</p>
+<p>在被其他物体撞击这个手雷实体的时候才会触发<code>Touch（碰撞）</code>，所以我们需要想</p>
+<p>提示：设定<code>实体大小</code>尽量在设置<code>模型外观</code>之后进行，不然有可能会出现实体大小异常，比如很小或者很大</p>
+<h1 id="Think思考"><a href="#Think思考" class="headerlink" title="Think思考"></a>Think思考</h1><p>当一个物体有了自己的思考，那么他就可以移动了，这样想的话的确不错</p>
+<p>可是我们应该怎么让这个物体拥有思考</p>
+<p>这里用<code>fakemeta</code>模块来做示范</p>
+<p>代码为<code>FM_Think</code>，是一个回调钩子，我们可以用<code>register_forward</code>来勾住他</p>
+<p>像这样即可：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">plugin_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">register_forward</span>(FM_Think, <span class="string">&quot;EntityThink&quot;</span>) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>和碰撞不同的是，思考只有一个参数，所以代码是这样</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">plugin_init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">register_forward</span>(FM_Think, <span class="string">&quot;思考触发函数&quot;</span>) </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> 思考触发函数(实体)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为每个实体都有自己的实体名，所以这里我们需要添加一个判断<br>判断是不是由那个实体的思考</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="keyword">class</span>[<span class="number">33</span>]</span><br><span class="line"><span class="built_in">pev</span>(ent, pev_classname, <span class="keyword">class</span>, <span class="built_in">sizeof</span>(<span class="keyword">class</span>)<span class="number">-1</span>) <span class="comment">//获取ent的实体名并存储到class数组变量中</span></span><br></pre></td></tr></table></figure>
+
+<p>判断字符串的方法是用<code>equal</code></p>
+<p>equal是用来<code>不区分大小写</code>判断字符串的，他有两个参数需要填写</p>
+<ol>
+<li>获取什么数组中的字符串</li>
+<li>字符串内容是什么呢</li>
+</ol>
+<p>比如我们要判断一个 abc的实体，配合上面的 class 数组变量 我们可以写出如下代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="keyword">class</span>[<span class="number">33</span>]</span><br><span class="line"><span class="built_in">pev</span>(ent, pev_classname, <span class="keyword">class</span>, <span class="built_in">sizeof</span>(<span class="keyword">class</span>)<span class="number">-1</span>)</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">equal</span>(<span class="keyword">class</span>, <span class="string">&quot;abc&quot;</span>))</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>说到这里，我们可能发现我们所创建的<code>手雷</code>实体，没有实体</p>
+<p><strong>那我们应该怎么设置实体名？</strong></p>
+<p>很简单，在创建部分中添加一个</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set_pev</span>(ent, pev_classname, <span class="string">&quot;shoulei&quot;</span>) <span class="comment">//引号里面的内容，根据你自己的喜爱决定</span></span><br></pre></td></tr></table></figure>
+
+<p>我们所创建的实体的实体名，必须要和<code>FM_Touch</code>或<code>FM_Think</code>那边所触发的函数中，判断中的<code>equal</code>第二个参数相吻合，不然我们可能会发现，没有撞击效果或者没有思考等问题</p>
+<p>该系列文章到此就完结了，其实代码是不够完善的，欢迎大家留言讨论。</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><a target="_blank" rel="noopener" href="https://www.zybuluo.com/sogouwap/note/774578">Lv.6 高级·轻 — AMXX插件编写教程</a></p>
+</div><div class="tags"><a href="/tags/cs1.6"><i class="fa fa-tag">cs1.6</i></a><a href="/tags/server"><i class="fa fa-tag">server</i></a></div><div class="post-nav"><a class="pre" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C007-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E6%96%B0%E6%89%8B%E7%AF%87%EF%BC%89/">cs1.6地图制作007-实例教程（新手篇）</a><a class="next" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B6-%E4%B8%AD%E9%9A%BE%E5%BA%A6/">amxx插件开发新手教程6-中难度</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == 'true' ? true : false;
+var verify = 'false' == 'true' ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'LPmDnvJEI92SNW9V6j9OieMI-gzGzoHsz',
+  appKey:'segFEOA3MguYQKbzhkNRbaPd',
+  placeholder:'Just so so',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="https://www.wudics.com"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>wudics</p><a class="info-icon" href="mailto:176367820@qq.com" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/wudics" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C/">cs1.6地图制作</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E6%9C%8D%E5%8A%A1%E5%99%A8/">cs1.6服务器</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cs1-6%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/">cs1.6编程开发</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">实用技巧</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/cs1-6/" style="font-size: 15px;">cs1.6</a> <a href="/tags/maps/" style="font-size: 15px;">maps</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/vscode/" style="font-size: 15px;">vscode</a> <a href="/tags/edge/" style="font-size: 15px;">edge</a> <a href="/tags/nodejs/" style="font-size: 15px;">nodejs</a> <a href="/tags/forever/" style="font-size: 15px;">forever</a> <a href="/tags/win10/" style="font-size: 15px;">win10</a> <a href="/tags/display/" style="font-size: 15px;">display</a> <a href="/tags/frp/" style="font-size: 15px;">frp</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/veraycrypt/" style="font-size: 15px;">veraycrypt</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%8A%A0%E5%AF%86/" style="font-size: 15px;">文件加密</a> <a href="/tags/%E7%9B%98%E7%AC%A6%E9%9A%90%E8%97%8F/" style="font-size: 15px;">盘符隐藏</a> <a href="/tags/server/" style="font-size: 15px;">server</a> <a href="/tags/amxx/" style="font-size: 15px;">amxx</a> <a href="/tags/module/" style="font-size: 15px;">module</a> <a href="/tags/csapp/" style="font-size: 15px;">csapp</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2023/06/08/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC2%E7%AB%A0/">深入理解计算机系统学习笔记-第2章</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/06/06/c-programming/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC1%E7%AB%A0/">深入理解计算机系统学习笔记-第1章</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C010-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E9%AB%98%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作010-实例教程（高级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C009-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%AD%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作009-实例教程（中级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C008-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E5%88%9D%E7%BA%A7%E7%AF%87%EF%BC%89/">cs1.6地图制作008-实例教程（初级篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/20/cs-map-dev/cs1.6%E5%9C%B0%E5%9B%BE%E5%88%B6%E4%BD%9C007-%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B%EF%BC%88%E6%96%B0%E6%89%8B%E7%AF%87%EF%BC%89/">cs1.6地图制作007-实例教程（新手篇）</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B7-%E9%AB%98%E9%9A%BE%E5%BA%A6%20copy/">amxx插件开发新手教程7-高难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/19/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B6-%E4%B8%AD%E9%9A%BE%E5%BA%A6/">amxx插件开发新手教程6-中难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/18/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B5-%E8%BD%BB%E9%9A%BE%E5%BA%A6/">amxx插件开发新手教程5-轻难度</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/05/18/cs-programming/amxx%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E6%95%99%E7%A8%8B4-%E8%BF%9B%E9%98%B6/">amxx插件开发新手教程4-进阶</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://gamebanana.com/" title="gamebanana" target="_blank">gamebanana</a><ul></ul><a href="https://rehlds.ru/" title="rehlds.ru" target="_blank">rehlds.ru</a><ul></ul><a href="http://tarimren.ysepan.com/" title="毛毛老公的CS空间" target="_blank">毛毛老公的CS空间</a><ul></ul><a href="http://351642983.ysepan.com/" title="CS1.6资源网盘" target="_blank">CS1.6资源网盘</a><ul></ul><a href="http://sum41.ysepan.com/" title="羊大侠网盘" target="_blank">羊大侠网盘</a><ul></ul><a href="http://hyyddx.ysepan.com/" title="B站-好鱼有点东西" target="_blank">B站-好鱼有点东西</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2023 <a href="/." rel="nofollow">无敌CS博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.js"></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0"></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/latest/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div></body></html>
