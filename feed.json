@@ -1,0 +1,44 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "猛男博客",
+    "description": "",
+    "home_page_url": "https://blog.cser.top",
+    "feed_url": "https://blog.cser.top/feed.json",
+    "user_comment": "",
+    "author": {
+        "name": "wudics"
+    },
+    "items": [
+        {
+            "id": "https://blog.cser.top/guan-yu-cong-windows-10qie-huan-dao-deepin-v25de-shi-qing.html",
+            "url": "https://blog.cser.top/guan-yu-cong-windows-10qie-huan-dao-deepin-v25de-shi-qing.html",
+            "title": "关于从windows 10切换到deepin v25的事情",
+            "summary": "1、更换系统的原因 出于以下原因，使我决定更换操作系统： 1）对微软已经审美疲劳了，我用过win95、win98、winxp、win7、win10和win11系统，但就是觉得windows最好用的还是winxp版本。 2）win10占用资源太大了，笔记本装多一些软件时，耗电量是真快，不太喜欢。 3）微软宣布win10将在2025年10月14日终止支持，到时候只能用咖喱味的win11了。 4）除了windows就是linux和mac了，然后就安装了ubuntu，各种折腾，最后还是没有能够很好解决问题，甚至不能正常使用，对国人使用习惯完全不友好。 5）最后考虑到国产化和国人使用习惯的原因，对比了几个国产操作系统，选择了deepin，在生态方面目前已经能够满足办公的基本需求了，聊天工具QQ、微信、政务微信等的linux版本，都能够很好适配deepin。对于游戏，可以借助steam的proton来完成，效果非常好。 ！！！一定要先准备一个正品的U盘 ！！！一定要先准备一个正品的U盘 ！！！一定要先准备一个正品的U盘 重要的事情说3遍～ 否则会在安装deepin系统的过程中出现各种奇怪现象，例如安装到一般卡住之类的、花屏、甚至无法识别U盘引导…… 其罪魁祸首是假U盘在拷贝数据时，没有真正的把完整的ISO镜像写入到U盘，导致镜像数据不完整。 我这里使用了ventoy制作了启动盘，然后就是把下载好的deepin v25的iso镜像拷贝到U盘即可，开机引导时选择iso镜像按照步骤完成安装就行。 deepin操作系统基本是开箱即用的状态，系统安装完成后，只需要安装所需的软件即可，没有太多额外需要配置折腾的地方，很符合国人的操作习惯。 首先，我们先关闭deepin v25的只读保护功能，deepin v25底层叫做磐石系统，兼容debian12的，但是磐石默认开启了只读保护功能。 ！！！如果不关闭只读保护功能，会导致很多软件无法正常安装和使用，这是因为无法只读模式，无法写入数据。 sudo deepin-immutable-ctl disable-system-protect enable 关闭之后，我们才进行后续操作。 点击设置（小齿轮图标）-&gt;系统更新-&gt;按照操作并等待完成系统更新即可。 我刚开始是安装virtualbox7.1来着，后来发现3D加速会导致虚拟机的系统启动崩溃，于是换了virtualbox6.1版本，3D加速倒是能够正常开启了，但是进入系统之后是各种卡顿，根本无法正常使用。所以，最后还是选择了vmware，好在vmware workstation pro 17是免费的，到vmware官方网站注册账号下载即可，且支持linux版本。 vmware目前以开放个人免费使用 # 首先到vmware官方网站下载workstation pro https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion # 设置安装包可执行权限 chmod +x ./VMware-Workstation-Full-17.6.3-24583834.x86_64.bundle # 关闭deepin v25磐石系统只读保护 sudo deepin-immutable-ctl&hellip;",
+            "content_html": "<h1>1、更换系统的原因</h1>\n<p>出于以下原因，使我决定更换操作系统：</p>\n<p>1）对微软已经审美疲劳了，我用过win95、win98、winxp、win7、win10和win11系统，但就是觉得windows最好用的还是winxp版本。</p>\n<p>2）win10占用资源太大了，笔记本装多一些软件时，耗电量是真快，不太喜欢。</p>\n<p>3）微软宣布win10将在2025年10月14日终止支持，到时候只能用咖喱味的win11了。</p>\n<p>4）除了windows就是linux和mac了，然后就安装了ubuntu，各种折腾，最后还是没有能够很好解决问题，甚至不能正常使用，对国人使用习惯完全不友好。</p>\n<p>5）最后考虑到国产化和国人使用习惯的原因，对比了几个国产操作系统，选择了<span style=\"color: #2dc26b;\"><strong>deepin</strong></span>，在生态方面目前已经能够满足办公的基本需求了，聊天工具QQ、微信、政务微信等的linux版本，都能够很好适配deepin。对于游戏，可以借助steam的proton来完成，效果非常好。</p>\n<h1>2、更换系统遇到的一些问题和解决办法</h1>\n<h2>2.1、首先是deepin系统的安装</h2>\n<p>！！！一定要先准备一个<strong><span style=\"color: #e03e2d;\">正品</span></strong>的U盘</p>\n<p>！！！一定要先准备一个<strong><span style=\"color: #e03e2d;\">正品</span></strong>的U盘</p>\n<p>！！！一定要先准备一个<strong><span style=\"color: #e03e2d;\">正品</span></strong>的U盘</p>\n<p>重要的事情说3遍～</p>\n<p>否则会在安装deepin系统的过程中出现各种奇怪现象，例如安装到一般卡住之类的、花屏、甚至无法识别U盘引导……</p>\n<p><span style=\"color: #e03e2d;\">其罪魁祸首是假U盘在拷贝数据时，没有真正的把完整的ISO镜像写入到U盘，导致镜像数据不完整。</span></p>\n<p>我这里使用了<strong><span style=\"color: #2dc26b;\"><a href=\"https://www.ventoy.net/en/index.html\" target=\"_blank\" rel=\"noopener noreferrer\">ventoy</a></span></strong>制作了启动盘，然后就是把下载好的deepin v25的<span style=\"color: #2dc26b;\">iso</span>镜像拷贝到U盘即可，开机引导时选择iso镜像按照步骤完成安装就行。</p>\n<h2>2.2、系统安装之后的一些软件的安装</h2>\n<p><span style=\"color: #2dc26b;\">deepin操作系统基本是开箱即用的状态，系统安装完成后，只需要安装所需的软件即可，没有太多额外需要配置折腾的地方，很符合国人的操作习惯。</span></p>\n<h3>1）关闭只读保护</h3>\n<p>首先，我们先关闭deepin v25的只读保护功能，deepin v25底层叫做磐石系统，兼容debian12的，但是磐石默认开启了只读保护功能。</p>\n<p><span style=\"color: #e03e2d;\">！！！如果不关闭只读保护功能，会导致很多软件无法正常安装和使用，这是因为无法只读模式，无法写入数据。</span></p>\n<pre class=\"language-bash\"><code>sudo deepin-immutable-ctl disable-system-protect enable</code></pre>\n<p>关闭之后，我们才进行后续操作。</p>\n<h3>2）更新系统到最新状态</h3>\n<p>点击设置（小齿轮图标）-&gt;系统更新-&gt;按照操作并等待完成系统更新即可。</p>\n<h3>3）安装vmware虚拟机</h3>\n<p>我刚开始是安装virtualbox7.1来着，<span style=\"color: #e03e2d;\">后来发现3D加速会导致虚拟机的系统启动崩溃</span>，于是换了virtualbox6.1版本，3D加速倒是能够正常开启了，<span style=\"color: #e03e2d;\">但是进入系统之后是各种卡顿，根本无法正常使用</span>。所以，最后还是选择了vmware，好在<span style=\"color: #2dc26b;\">vmware workstation pro 17</span>是免费的，到<a href=\"https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion\" target=\"_blank\" rel=\"noopener noreferrer\">vmware官方网站</a>注册账号下载即可，且支持linux版本。</p>\n<pre class=\"language-bash\"><code>vmware目前以开放个人免费使用\n\n# 首先到vmware官方网站下载workstation pro\nhttps://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion\n\n# 设置安装包可执行权限\nchmod +x ./VMware-Workstation-Full-17.6.3-24583834.x86_64.bundle\n\n# 关闭deepin v25磐石系统只读保护\nsudo deepin-immutable-ctl disable-system-protect enable\n\n# 重启电脑\nreboot\n\n# 安装vmware\nsudo ./VMware-Workstation-Full-17.6.3-24583834.x86_64.bundle</code></pre>\n<p><span style=\"color: #2dc26b;\">安装好vmware后，就可以在vmware安装win10、win11之类的了，甚至可以安装winxp……</span></p>\n<h3>4）安装其他常用软件</h3>\n<p>这里建议想要安装什么软件，就去对应官方网站上找<strong><span style=\"color: #2dc26b;\">deb安装包</span></strong>进行安装（因为玲珑打包的方式还不成熟），常见的<span style=\"color: #2dc26b;\">QQ、微信、政务微信、WPS、vscode、有道云</span>等，都有deb安装包，有些写着适配UOS统信系统的，其实也是支持deepin的，因为UOS本来就是deepin的一个商业版分支。</p>\n<p><strong><span style=\"color: #e03e2d;\">安装方法基本上就是使用dpkg和apt命令相结合，先用dpkg命令安装，如果没有依赖缺失问题一般就安装成功了，如果遇到依赖缺失问题，那么可以尝试使用apt命令来自动安装依赖，或者到debian12的仓库找对应的依赖deb安装包，下载后手动安装。</span></strong></p>\n<pre class=\"language-bash\"><code>### 下载并尝试安装virtualbox-7.1的deb包\n\nsudo dpkg -i ./virtualbox-7.1_7.1.6-167084~Debian~bookworm_amd64.deb\n\n### 此时会提示缺少组件，尝试修复一下\nsudo apt install -f\n（或者使用`sudo apt --fix-broken install`也可以）\n\n### 接着尝试手动安装缺失组件\nsudo apt install libgtk2.0-0\n\n### 此时会提示缺少其他组建，继续尝试修复一下，并安装确实组件\nsudo apt install -f\nsudo apt install libgtk2.0-common\n\n### 安装好libgtk2.0-common后，继续安装libgtk2.0-0\nsudo apt install libgtk2.0-0\n\n\n===============\n\n### 此时，尝试安装libvpx7，发现apt库中并没有该版本\nsudo apt install libvpx7\n\n### 去debian仓库找到并下载libvpx7的deb包\nsudo dpkg -i ./libvpx7_1.12.0-1+deb12u3_amd64.deb\n\n===============\n\n### 依赖安装完成后，安装virtualbox7.1\n\nsudo dpkg -i ./virtualbox-7.1_7.1.6-167084~Debian~bookworm_amd64.deb\n\n===============\n\n### 此时，启动virtualbox应该会提示无法枚举USB设备\n### 我们需要把当前用户加入到vboxusers用户组，并重启电脑\nsudo usermod -a -G vboxusers wudics\nreboot</code></pre>\n<p>这里举了一个virtualbox的deb包安装的例子，简单说明一下：</p>\n<p>1、开始的时候，我们用<span style=\"color: #e03e2d;\">`sudo dpkg -i xxx.deb`</span>命令安装，发现缺少依赖；</p>\n<p>2、然后用命令<span style=\"color: #e03e2d;\">`sudo apt install -f`</span>来尝试自动修复依赖，如果没报错就是安装好了；</p>\n<p>3、很显然这里继续报错了，提示还缺少依赖libvpx7，此时我们可以到debian12的仓库找对应的libvpx7版本下载后进行手动安装；</p>\n<p>4、最后在用dpkg命令来完成virtualbox的安装。</p>\n<p> </p>\n<p>最后要说的是deepin v25系统很符合我的操作习惯，生态软件也丰富，办公游戏都还可以，基本上是开箱即用的情况。</p>\n<p> </p>\n<p> </p>",
+            "image": "https://blog.cser.top/media/posts/3/background.jpg",
+            "author": {
+                "name": "wudics"
+            },
+            "tags": [
+                   "操作系统"
+            ],
+            "date_published": "2025-04-16T12:58:59+08:00",
+            "date_modified": "2025-04-17T12:32:23+08:00"
+        },
+        {
+            "id": "https://blog.cser.top/hello-publii.html",
+            "url": "https://blog.cser.top/hello-publii.html",
+            "title": "Hello Publii",
+            "summary": "从今天开始使用publii来写博客，在这里记录一下。 首先，为什么选择publii？我主要有以下几点考虑： 1、满足我离线写笔记的需求，同时又能满足我将笔记发布成博客网站的需求； 2、publii是开源的项目，支持deepin（linux）系统，当然也是支持windows的； 3、publii可以通过安装额外的插件和主题，以及相应的配置，生成不同风格的网站； 4、它还可以配置远端服务器，实现一键发布网站的功能。",
+            "content_html": "<p>从今天开始使用<a href=\"https://getpublii.com/\" title=\"Publii官网\" target=\"_blank\" rel=\"noopener noreferrer\">publii</a>来写博客，在这里记录一下。</p>\n<p>首先，为什么选择publii？我主要有以下几点考虑：</p>\n<p>1、满足我离线写笔记的需求，同时又能满足我将笔记发布成博客网站的需求；</p>\n<p>2、publii是开源的项目，支持deepin（linux）系统，当然也是支持windows的；</p>\n<p>3、publii可以通过安装额外的插件和主题，以及相应的配置，生成不同风格的网站；</p>\n<p>4、它还可以配置远端服务器，实现一键发布网站的功能。</p>",
+            "author": {
+                "name": "wudics"
+            },
+            "tags": [
+                   "编程开发"
+            ],
+            "date_published": "2025-04-16T12:30:47+08:00",
+            "date_modified": "2025-04-17T12:03:09+08:00"
+        }
+    ]
+}
